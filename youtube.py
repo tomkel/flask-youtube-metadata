@@ -1,4 +1,4 @@
-from flask import Flask, jsonify
+from flask import Flask, jsonify, abort
 import youtube_dl
 
 #        return jsonify(username=g.user.username,
@@ -19,6 +19,11 @@ class ErrorLogger(object):
         print(msg)
 
 
+@app.errorhandler(400)
+def unavailable(error):
+    return error.description[0], 400
+
+
 @app.route('/metadata/<vid>')
 def get_info(vid):
 
@@ -35,11 +40,15 @@ def get_info(vid):
     def has_av(f):
         return f['acodec'] != 'none' and f['vcodec'] != 'none'
 
-    ydl_opts = {'logger': ErrorLogger()}
+    ydl_opts = {'logger': ErrorLogger(), 'no_color': True}
     with youtube_dl.YoutubeDL(ydl_opts) as ydl:
-        info = ydl.extract_info(
+        try:
+            info = ydl.extract_info(
                     'http://www.youtube.com/watch?v={}'.format(vid),
                     download=False)
+        except Exception as e:
+            return abort(400, e.args)
+
         audio_only = [f for f in info['formats'] if f['acodec'] != 'none' and
                       f['vcodec'] == 'none']
         audio_only_best = get_best_audio(audio_only)
