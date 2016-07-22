@@ -1,4 +1,5 @@
 from flask import Flask, jsonify, abort
+from flask_cors import CORS
 import youtube_dl
 
 #        return jsonify(username=g.user.username,
@@ -6,6 +7,7 @@ import youtube_dl
 #                   id=g.user.id)
 
 app = Flask(__name__)
+CORS(app)
 
 
 class ErrorLogger(object):
