@@ -18,4 +18,4 @@ CMD uwsgi --socket 0.0.0.0:5000 --module youtube:app --virtualenv yt-env \
         --master --processes 5 --threads 2 --die-on-term --vacuum  \
         --manage-script-name
 
-EXPOSE 5000 5000
+EXPOSE 5000
