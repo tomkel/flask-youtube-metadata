@@ -1,9 +1,12 @@
-FROM lucidfrontier45/python-uwsgi:3
+FROM lucidfrontier45/python-uwsgi:3-alpine
 MAINTAINER Tommy Kelly <docker@tkel.ly>
 
 ENV sourceDir /flask-youtube-metadata
 
 RUN pip3 install virtualenv
+
+RUN apk update && apk upgrade && \
+    apk add --no-cache bash git openssh
 
 RUN git clone https://github.com/tomkel/flask-youtube-metadata.git $sourceDir
 
