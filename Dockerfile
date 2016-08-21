@@ -13,8 +13,8 @@ WORKDIR $sourceDir
 RUN pip3 install -r requirements.txt
 
 ENTRYPOINT ["uwsgi", "--socket", ":5000", "--module", "youtube:app", \
-        "--virtualenv", "yt-env", "--master", "--die-on-term", "--vacuum", \
-        "--manage-script-name", "--stats", ":1717"]
+        "--master", "--die-on-term", "--vacuum", \ "--manage-script-name", \
+        "--stats", ":1717"]
 CMD ["--processes", "4", "--threads", "2"]
 
 EXPOSE 5000 1717
