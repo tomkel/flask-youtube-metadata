@@ -14,8 +14,9 @@ RUN virtualenv yt-env \
         && pip install uwsgi \
         && pip install -r requirements.txt
 
-CMD uwsgi --socket 0.0.0.0:5000 --module youtube:app --virtualenv yt-env \
-        --master --processes 5 --threads 2 --die-on-term --vacuum  \
-        --manage-script-name
+ENTRYPOINT ["uwsgi" "--socket" "0.0.0.0:5000" "--module" "youtube:app" \
+        "--virtualenv" "yt-env" "--master" "--die-on-term" "--vacuum" \
+        "--manage-script-name"]
+CMD ["--processes" "4" "--threads" "2"]
 
 EXPOSE 5000
