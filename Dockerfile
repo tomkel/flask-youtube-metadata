@@ -1,4 +1,4 @@
-FROM lucidfrontier45/python-uwsgi:3-alpine
+FROM lucidfrontier45/python-uwsgi:3.5-alpine
 MAINTAINER Tommy Kelly <docker@tkel.ly>
 
 ENV sourceDir /flask-youtube-metadata
